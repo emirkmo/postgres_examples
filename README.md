@@ -35,6 +35,7 @@ UNIQUE
 AUTO_INCREMENT
 DEFAULT <val>
 ```
+
 Update Delete
 ```sql
 UPDATE …
@@ -47,6 +48,7 @@ AND
 DELETE FROM …
 WHERE <condition>
 ```
+
 Queries
 ```sql
 SELECT *,<Cols>,table.col
@@ -69,8 +71,10 @@ FROM …
 COUNT(col1)
 AVG()
 SUM()
+EXTRACT(<attr: year/month> from <date: column>) -- OR other extractions.
 GROUP BY <col1>
 ```
+
 Wildcards
 `%` = Nchars, `_` = one char.
 ```sql
@@ -116,18 +120,31 @@ On Delete
 Triggers
 (In command line)
 Mysql (slightly different in postgres):
+
 ```sql
-use <db>
-DELIMITER $$
-CREATE
-TRIGGER … BEFORE INSERT
-ON tab1
-FOR EACH ROW BEGIN
-IF NEW.col2 = ‘…’
-INSERT INTO tablog VALUES(NEW.col1,‘…’)
-ELSEIF
-ELSE
-END IF
-END$$
-DELIMITER ;
+    use <db>
+    DELIMITER $$
+    CREATE
+    TRIGGER … BEFORE INSERT
+    ON tab1
+    FOR EACH ROW BEGIN
+    IF NEW.col2 = ‘…’
+    INSERT INTO tablog VALUES(NEW.col1,‘…’)
+    ELSEIF
+    ELSE
+    END IF
+    END$$
+    DELIMITER;
+```
+
+```sql
+-- ATOMIZED
+BEGIN TRANSACTION
+.. -- update
+..
+COMMIT;
+```
+
+```sql
+CREATE INDEX <index_name> ON tab1(col);  -- create simple index.
 ```
